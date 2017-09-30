@@ -1,9 +1,17 @@
 
 function init(io, state) {
     io.on("connection", (socket) => {
-        console.log("socket session: " + JSON.stringify(socket.handshake));
-        console.log("socket session id: " + socket.handshake.sessionID);
-        console.log("session: " + socket.handshake.message);
+        let userId = socket.handshake.session.userId;
+        let user = state.users.getUserById(userId);
+
+        if (user == null) {
+            console.warn("socket for unknown user, ignoring.")
+            return;
+        }
+        
+        console.log("socket connected for user: " + userId);
+
+        user.setSocket(socket);
     });
 }
 

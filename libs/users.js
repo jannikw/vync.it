@@ -3,7 +3,16 @@ function User(id, name) {
     this.id = id;
     this.name = name;
     this.temporary = true;
+    this.socket = null;
 }
+
+User.prototype.setSocket = function (socket) {
+    if (this.socket) {
+        this.socket.disconnect();
+    }
+
+    this.socket = socket;
+};
 
 function UserManager() {
     this.users = [];

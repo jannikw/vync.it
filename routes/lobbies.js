@@ -19,9 +19,14 @@ module.exports = function (state) {
         let lobby = state.lobbies.getLobbyById(req.params.id);
         let user = state.users.getUserById(req.session.userId);
 
-        req.locals.user = user;
-
         if (lobby) {
+            if (!lobby.isMember(user)) {
+                lobby.join(user);
+            }
+
+            res.locals.user = user;
+            res.locals.lobby = lobby;
+
             res.render("lobby");
         } else {
             res.send("lobby not found");

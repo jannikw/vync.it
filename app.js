@@ -57,7 +57,7 @@ app.use(routes(state));
 sockets(io, state);
 
 io.on("connection", function (socket) {
-    console.log("user connected: " + socket);
+    console.log("socket connected: " + socket.conn.id);
 });
 
 // Start the server
