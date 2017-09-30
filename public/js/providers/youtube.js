@@ -12,6 +12,8 @@ window.Providers.youtube = function () {
         this.eventHandler = null;
         this.media = null;
         this.ready = false;
+        this.intervalId = null;
+        this.destroyed = false;
     }
 
     YouTubeProvider.prototype.init = function (elementId, eventHandler) {
@@ -33,8 +35,12 @@ window.Providers.youtube = function () {
                 width: width,
                 events: {
                     onReady: () => {
-                        this.ready = true;
-                        this.playback(this.media);
+                        if (this.destroyed) {
+                            this.destroy();
+                        } else {
+                            this.ready = true;
+                            this.playback(this.media);
+                        }
                     },
                     onStateChange: (state) => {
                         switch (state.data) {
@@ -46,12 +52,20 @@ window.Providers.youtube = function () {
                             break;
                         case YT.PlayerState.PLAYING:
                             this.eventHandler("playing");
+                            this.intervalId = setInterval(() => {
+                                this.eventHandler("timeupdate", {
+                                    seconds: this.player.getCurrentTime(),
+                                    duration: this.player.getDuration()
+                                });
+                            }, 100);
                             break;
                         case YT.PlayerState.PAUSED:
                             this.eventHandler("paused");
+                            clearInterval(this.intervalId);
                             break;
                         case YT.PlayerState.BUFFERING:
                             this.eventHandler("buffering");
+                            clearInterval(this.intervalId);
                             break;
                         case YT.PlayerState.CUED:
                             this.eventHandler("ready", {
@@ -68,7 +82,11 @@ window.Providers.youtube = function () {
     };
 
     YouTubeProvider.prototype.destroy = function () {
-        this.player.destroy();
+        if (this.player) {
+            this.player.destroy();
+        }
+        this.destroyed = true;
+        clearInterval(this.intervalId);
     };
 
     YouTubeProvider.prototype.playback = function (media) {
@@ -94,8 +112,8 @@ window.Providers.youtube = function () {
         this.player.seekTo(seconds);
     };
 
-    YouTubeProvider.prototype.getCurrentTime = function () {
-        return this.player.getCurrentTime();
+    YouTubeProvider.prototype.getCurrentTime = function (callback) {
+        callback(this.player.getCurrentTime());
     };
 
     return new YouTubeProvider();
