@@ -1,9 +1,23 @@
 <div id="playlist">
-    <ul class="list-inline">
+    <a id="playlist-left" class="button" onclick="scrollPlaylistLeft();">
+        <span class="fa-stack">
+            <i class="fa fa-circle fa-stack-2x circle-full" aria-hidden="true"></i>
+            <i class="fa fa-chevron-circle-left fa-stack-2x" aria-hidden="true"></i>
+            <i class="fa fa-circle-thin fa-stack-2x circle" aria-hidden="true"></i>
+        </span>
+    </a>
+    <a id="playlist-right" class="button" onclick="scrollPlaylistRight();">
+        <span class="fa-stack">
+            <i class="fa fa-circle fa-stack-2x circle-full" aria-hidden="true"></i>
+            <i class="fa fa-chevron-circle-right fa-stack-2x" aria-hidden="true"></i>
+            <i class="fa fa-circle-thin fa-stack-2x circle" aria-hidden="true"></i>
+        </span>
+    </a>
+    <div id="playlist-scroll">
         {{#each upcoming}}
-            <li class="list-inline-item">
-                <img src="https://img.youtube.com/vi/{{this.id}}/hqdefault.jpg" />
-            </li>
+            <div class="upcoming">
+                <img src="https://img.youtube.com/vi/{{this.id}}/mqdefault.jpg" />
+            </div>
         {{/each}}
-    </ul>
+    </div>
 </div>

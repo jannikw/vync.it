@@ -26,25 +26,63 @@ body {
     height: 100%;
 }
 
-#content #player {
+#player {
     background-color: red;
     margin-top: 7.5%;
 }
 
-#content #playlist ul li img {
-    width: 50%;
+#playlist {
+    position: relative;
+    border: 1px solid black;
 }
 
-#content #users {
+#playlist .button {
+    position: absolute;
+    top: 35%;
+    color: grey;
+}
+
+#playlist .button .circle {
+    color: white;
+}
+
+#playlist .button .circle-full {
+    color: black;
+}
+
+#playlist-scroll {
+    overflow: auto;
+    white-space: nowrap;
+    overflow-x: hidden;
+}
+
+#playlist-scroll .upcoming {
+    display: inline-block;
+    width: 25%;
+}
+
+#playlist-scroll .upcoming img {
+    width: 100%;
+}
+
+#playlist-left {
+    left: 10px;
+}
+
+#playlist-right {
+    right: 10px;
+}
+
+#users {
     float: right;
     width: 75%;
 }
 
-#content #users ul li {
+#users ul li {
     text-align: right;
 }
 
-#content #users ul li span {
+#users ul li span {
     margin-right: 5px;
 }
 

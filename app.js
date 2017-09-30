@@ -37,6 +37,12 @@ app.get("/", function (req, res) {
         { id: "tdUX3ypDVwI", title: "Making Life Multiplanetary"},
         { id: "bvim4rsNHkQ", title: "How Not to Land an Orbital Rocket Booster"},
         { id: "zqE-ultsWt0", title: "BFR | Earth to Earth"},
+        { id: "tdUX3ypDVwI", title: "Making Life Multiplanetary"},
+        { id: "bvim4rsNHkQ", title: "How Not to Land an Orbital Rocket Booster"},
+        { id: "zqE-ultsWt0", title: "BFR | Earth to Earth"},
+        { id: "tdUX3ypDVwI", title: "Making Life Multiplanetary"},
+        { id: "bvim4rsNHkQ", title: "How Not to Land an Orbital Rocket Booster"},
+        { id: "zqE-ultsWt0", title: "BFR | Earth to Earth"},
     ];
 
     res.render("index");
