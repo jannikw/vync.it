@@ -30,6 +30,10 @@ window.Providers.youtube = function () {
         firstScripttag.parentNode.insertBefore(tag, firstScripttag);
 
         window.onYouTubePlayerAPIReady = () => {
+            if (this.destroyed) {
+                return;
+            }
+
             this.player = new YT.Player(elementId, {
                 height: height,
                 width: width,
