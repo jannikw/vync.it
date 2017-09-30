@@ -8,9 +8,9 @@ window.Providers.vimeo = function () {
     const SCRIPT_URL = "https://player.vimeo.com/api/player.js";
 
     function VimeoProvider() {
+        this.name = "vimeo";
         this.player = null;
         this.eventHandler = null;
-        this.media = null;
     }
 
     VimeoProvider.prototype.init = function(elementId, eventHandler) {
@@ -55,63 +55,37 @@ window.Providers.vimeo = function () {
     };
 
     VimeoProvider.prototype.playback = function (media) {
-        return Q.Promise((resolve, reject) => {
-            this.player.loadVideo(media)
-                .then(() => {
-                    resolve();
-                })
-                .catch(reject);
-        });
+        return Q(this.player.loadVideo(media));
     };
 
     VimeoProvider.prototype.play = function () {
-        return Q.Promise((resolve, reject) => {
-            this.player.play()
-                .then(() => {
-                    resolve();
-                })
-                .catch(reject);
-        });
+        return Q(this.player.play());
     };
 
     VimeoProvider.prototype.pause = function () {
-        return Q.Promise((resolve, reject) => {
-            this.player.pause()
-                .then(() => {
-                    resolve();
-                })
-                .catch(reject);
-        });
+        return Q(this.player.pause());
     };
 
     VimeoProvider.prototype.stop = function () {
-        return Q.Promise((resolve, reject) => {
-            this.player.unload()
-                .then(() => {
-                    resolve();
-                })
-                .catch(reject);
-        });
+        return Q(this.player.unload());
     };
 
     VimeoProvider.prototype.setCurrentTime = function (seconds) {
-        return Q.Promise((resolve, reject) => {
-            return this.player.setCurrentTime(seconds)
-                .then(function() {
-                    resolve();
-                }).catch(reject);
-        });
+        return Q(this.player.getPaused()
+            .then((paused) => {
+                let promise = this.player.setCurrentTime(seconds);
+
+                if (paused) {
+                    return promise.then(() => this.player.pause());
+                } else {
+                    return promise;
+                }
+            }));
     };
 
     VimeoProvider.prototype.getCurrentTime = function () {
-        return Q.Promise((resolve, reject) => {
-            this.player.getCurrentTime()
-                .then((seconds) => {
-                    resolve(seconds);
-                })
-                .catch(reject);
-        });
+        return Q(this.player.getCurrentTime());
     };
 
-    return new VimeoProvider();
+    return VimeoProvider;
 }();

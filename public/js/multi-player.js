@@ -16,7 +16,7 @@ function MultiPlayer(elementId) {
 
 MultiPlayer.prototype.play = function () {
     if (this.currentProvider) {
-        return this.providers[this.currentProvider].play();
+        return this.currentProvider.play();
     }
 
     return null;
@@ -24,7 +24,7 @@ MultiPlayer.prototype.play = function () {
 
 MultiPlayer.prototype.pause = function () {
     if (this.currentProvider) {
-        return this.providers[this.currentProvider].pause();
+        return this.currentProvider.pause();
     }
 
     return null;
@@ -32,7 +32,7 @@ MultiPlayer.prototype.pause = function () {
 
 MultiPlayer.prototype.stop = function () {
     if (this.currentProvider) {
-        return this.providers[this.currentProvider].stop();
+        return this.currentProvider.stop();
     }
 
     return null;
@@ -40,7 +40,7 @@ MultiPlayer.prototype.stop = function () {
 
 MultiPlayer.prototype.getCurrentTime = function () {
     if (this.currentProvider) {
-        return this.providers[this.currentProvider].getCurrentTime();
+        return this.currentProvider.getCurrentTime();
     }
 
     return null;
@@ -48,39 +48,40 @@ MultiPlayer.prototype.getCurrentTime = function () {
 
 MultiPlayer.prototype.setCurrentTime = function (seconds) {
     if (this.currentProvider) {
-        return this.providers[this.currentProvider].setCurrentTime(seconds);
+        return this.currentProvider.setCurrentTime(seconds);
     }
 
     return null;
 };
 
 MultiPlayer.prototype.playback = function (providerName, media) {
-    let newProvider = this.providers[providerName];
-    let oldProvider = this.providers[this.currentProvider];
-
-    if (!newProvider) {
-        throw new Error("provider " +  providerName + " is unknown!");
-    }
-
     // Check whether old an new provider are the same
-    if (newProvider == oldProvider) {
-        return newProvider.playback(media);
+    if (this.currentProvider && this.currentProvider.name == providerName) {
+        return this.currentProvider.playback(media);
     }
 
-    if (oldProvider) {
-        oldProvider.destroy();
+    let providerConstructor = this.providers[providerName];
+
+    if (!providerConstructor) {
+        throw new Error("provider " + providerName + " is unknown");
     }
 
-    this.currentProvider = providerName;
-    return newProvider.init(this.elementId, (event, data) => {
-        console.log("MP event: " + event, data);
+    if (this.currentProvider) {
+        this.currentProvider.destroy();
+    }
 
-        let handlers = this.handlers[event];
+    this.currentProvider = new providerConstructor();
+    return this.currentProvider
+        .init(this.elementId, (event, data) => {
+            console.log("MP event: " + event);
 
-        if (handlers != null && handlers.length > 0) {
-            handlers.forEach((handler) => handler(data));
-        }
-    }).then(() => newProvider.playback(media));
+            let handlers = this.handlers[event];
+
+            if (handlers != null && handlers.length > 0) {
+                handlers.forEach((handler) => handler(data));
+            }
+        })
+        .then(() => this.currentProvider.playback(media));
 };
 
 MultiPlayer.prototype.on = function (event, handler) {
