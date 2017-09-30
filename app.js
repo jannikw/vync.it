@@ -4,8 +4,12 @@ const session = require("express-session");
 const morgan = require("morgan");
 const favicon = require("serve-favicon");
 const path = require("path");
+const socketio = require("socket.io");
+const http = require("http");
 
 let app = express();
+let server = http.createServer(app);
+let io = socketio.listen(server);
 
 app.use(morgan("dev"));
 app.set("view engine", "hbs");
@@ -33,6 +37,10 @@ app.get("/", function (req, res) {
     res.render("index");
 });
 
-app.listen(8080, () => {
+io.on("connection", function (socket) {
+    console.log("user connected");
+});
+
+server.listen(8080, () => {
     console.log("Server listening on port 8080...");
 });
