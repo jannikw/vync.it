@@ -106,5 +106,11 @@ MultiPlayer.prototype.addProvider = function (name, provider) {
     }
 };
 
+MultiPlayer.prototype.destroy = function () {
+    if (this.currentProvider) {
+        this.providers[this.currentProvider].destroy();
+    }
+};
+
 
 
