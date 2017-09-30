@@ -5,6 +5,7 @@ const morgan = require("morgan");
 const favicon = require("serve-favicon");
 const path = require("path");
 const socketio = require("socket.io");
+const socketSession = require("express-socket.io-session");
 const http = require("http");
 
 const routes = require("./routes/");
@@ -13,6 +14,19 @@ const sockets = require("./sockets/");
 let app = express();
 let server = http.createServer(app);
 let io = socketio.listen(server);
+
+let sessionManager =session({
+    secret: "my secret secret",
+    resave: true,
+    saveUninitialized: true
+});
+
+let socketSessionManager = socketSession(sessionManager, {
+    autosave: true
+});
+
+app.use(sessionManager);
+io.use(socketSessionManager);
 
 sockets(io);
 
@@ -24,10 +38,6 @@ app.engine("hbs", hbs.express4({
     layoutsDir: __dirname + "/views/layouts/"
 }));
 app.set("views", __dirname + "/views/");
-
-app.use(session({
-    secret: "my secret secret"
-}));
 
 app.use(express.static(__dirname + "/public/"));
 app.use(favicon(path.join(__dirname, "public", "img", "favicon.ico")));
