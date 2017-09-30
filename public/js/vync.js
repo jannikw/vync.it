@@ -16,28 +16,30 @@ Vync.socket.on("setVideo", (platform, videoId) => this.player.playback(platform,
 Vync.socket.on("userupdate", (data) => updateUserlist(data));
 
 function updateUserlist(users) {
-    $("#users ul").each(function() {
-        var item = getByProperty(users, "id", $(this).id);
+    $("#users ul li").each(function() {
+        var item = getByProperty(users, "id", $(this).attr("id"));
         if (item) {
+            $(this).val(item.name);
             users.remove(item);
         } else {
             $(this).remove();
         }
     });
-    $.each(users, function(item) {
+    $.each(users, function(index) {
+        var item = users[index];
         $("#users ul").append(createUserItem(item));
     });
 }
 
 function getByProperty(haystack, property, needle) {
-    $.each(haystack, function(value) {
-        if (value[property] == needle)
+    $.each(haystack, function(index, value) {
+        if (value.id == needle)
             return value;
     });
 }
 
 function createUserItem(user) {
-    return "<li id=\"" + user.id + "\" class=\"list-group-item\">" +
+    return "<li id=\"user-" + user.id + "\" class=\"list-group-item\">" +
                 "<span>" + user.name + "</span>" +
                 "<i class=\"fa fa-times-circle-o\" aria-hidden=\"true\" title=\"Kick\"></i>" +
             "</li>";

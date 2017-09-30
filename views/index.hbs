@@ -1,31 +1,13 @@
 <div id="content" class="container-fluid">
     <div class="row">
-        <div class="col-3">
-            {{> sidebar-left}}
-        </div>
-        <div class="col-6">
-            <div id="player">
-                <div id="waiting">
-                    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
-                    <br>
-                    <span>Waiting for video...</span>
-                </div>
+        <div class="col-4"></div>
+        <div class="col-4">
+            <div id="description">
+                <h1>vync.it</h1>
+                The best video watching experience
             </div>
-            {{> playlist}}
+            <a href="/lobbies/create" id="btnCreate" class="btn btn-primary">Create Room</a>
         </div>
-        <div class="col-3">
-            {{> users}}
-        </div>
+        <div class="col-4"></div>
     </div>
 </div>
-
-{{#contentFor "pageScripts"}}
-    <script src="lib/q.js"></script>
-    <script src="js/providers/youtube.js" ></script>
-    <script src="js/providers/vimeo.js" ></script>
-    <script src="js/multi-player.js"></script>
-    <script src="/socket.io/socket.io.js"></script>
-
-    <script src="js/vync.js"></script>
-    <script src="js/playlist.js"></script>
-{{/contentFor}}

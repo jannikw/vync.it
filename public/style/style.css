@@ -2,10 +2,33 @@ html {
     position: relative;
     min-height: 100%;
 }
+
 body {
     /* Margin bottom by footer height */
     margin-bottom: 60px;
+    font-family: Roboto-Regular;
 }
+
+/* ----------------  FONT IMPORT ---------------- */
+
+@font-face {
+    font-family: Roboto-Regular; 
+    src: url(/fonts/Roboto-Regular.ttf); 
+}
+@font-face {
+    font-family: Roboto-Medium; 
+    src: url(/fonts/Roboto-Medium.ttf); 
+}
+@font-face {
+    font-family: Roboto-Light; 
+    src: url(/fonts/Roboto-Light.ttf); 
+}
+@font-face {
+    font-family: Roboto-Bold; 
+    src: url(/fonts/Roboto-Bold.ttf); 
+}
+
+/* ---------------------------------------------- */
 
 nav .logo {
     width: 32px;
@@ -18,6 +41,18 @@ nav .logo {
 #content {
     width: 100%;
     height: 100%;
+}
+
+#description {
+    text-align: center;
+}
+
+#description h1 {
+    font-size: 80px;
+}
+
+#btnCreate {
+    width: 100%;
 }
 
 footer {
