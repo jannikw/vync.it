@@ -12,7 +12,7 @@ app.engine("hbs", hbs.express4({
     partialsDir: __dirname + "/views/partials/",
     layoutsDir: __dirname + "/views/layouts/"
 }));
-app.set("views", __dirname, "/views/");
+app.set("views", __dirname + "/views/");
 
 app.use(session({
     secret: "my secret secret"
@@ -21,7 +21,13 @@ app.use(session({
 app.use(express.static(__dirname + "/public/"));
 
 app.get("/", function (req, res) {
-    res.send("Hello there!");
+    res.locals.users = [
+        { name: "Test1"},
+        { name: "Test2"},
+        { name: "Test3"},
+    ];
+
+    res.render("index");
 });
 
 app.listen(8080, () => {
