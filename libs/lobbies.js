@@ -13,6 +13,16 @@ Lobby.prototype.join = function (user) {
 
     this.members[user.id] = user;
     this.sendUserUpdate();
+
+    user.events.once("disconnect", () => this.leave(user));
+};
+
+Lobby.prototype.leave = function (user) {
+    if (this.members[user.id]) {
+        delete this.members[user.id];
+    }
+
+    this.sendUserUpdate();
 };
 
 Lobby.prototype.sendUserUpdate = function () {

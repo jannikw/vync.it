@@ -8,7 +8,7 @@ function init(io, state) {
             console.warn("socket for unknown user, ignoring.")
             return;
         }
-        
+
         console.log("socket connected for user: " + userId);
 
         user.setSocket(socket);
