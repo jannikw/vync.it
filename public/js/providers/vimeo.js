@@ -11,10 +11,12 @@ window.Providers.vimeo = function () {
         this.name = "vimeo";
         this.player = null;
         this.eventHandler = null;
+        this.elementId = null;
     }
 
     VimeoProvider.prototype.init = function(elementId, eventHandler) {
         return Q.Promise((resolve, reject) => {
+            this.elementId = elementId;
             this.eventHandler = eventHandler;
 
             let element = document.getElementById(elementId);
@@ -44,14 +46,22 @@ window.Providers.vimeo = function () {
     };
 
     VimeoProvider.prototype.destroy = function () {
-        this.player.destroy();
-        this.this.player.off("timeupdate");
-        this.player.off("play");
-        this.this.player.off("pause");
-        this.player.off("buffering");
-        this.player.off("ended");
-        this.player.off("error");
-        this.player.off("loaded");
+        if (this.player) {
+            this.player.off("timeupdate");
+            this.player.off("play");
+            this.player.off("pause");
+            this.player.off("buffering");
+            this.player.off("ended");
+            this.player.off("error");
+            this.player.off("loaded");
+        }
+
+        if (this.elementId) {
+            var myNode = document.getElementById(this.elementId);
+            while (myNode.firstChild) {
+                myNode.removeChild(myNode.firstChild);
+            }
+        }
     };
 
     VimeoProvider.prototype.playback = function (media) {
