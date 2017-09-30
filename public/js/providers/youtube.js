@@ -16,13 +16,13 @@ window.Providers.youtube = function () {
     }
 
     YouTubeProvider.prototype.init = function (elementId, eventHandler) {
-        return Q.Promise((resolve, reject) => {
-            this.eventHandler = eventHandler;
+        this.eventHandler = eventHandler;
 
-            let element = document.getElementById(elementId);
-            let width = element.clientWidth;
-            let height = element.lientheight;
-            
+        let element = document.getElementById(elementId);
+        let width = element.clientWidth;
+        let height = element.lientheight;
+
+        return Q.Promise((resolve) => {
             let tag = document.createElement("script");
             tag.src = SCRIPT_URL;
 
