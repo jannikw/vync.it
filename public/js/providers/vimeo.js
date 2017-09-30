@@ -96,17 +96,10 @@ window.Providers.vimeo = function () {
 
     VimeoProvider.prototype.setCurrentTime = function (seconds) {
         return Q.Promise((resolve, reject) => {
-            this.player.getPaused().then(function(paused) {
-                return this.player.setCurrentTime(seconds)
-                    .then(() => {
-                        /*
-                        if (paused) {
-                            this.pause();
-                        }
-                        */
-                        resolve();
-                    });
-            }).catch(reject);
+            return this.player.setCurrentTime(seconds)
+                .then(function() {
+                    resolve();
+                }).catch(reject);
         });
     };
 

@@ -73,7 +73,7 @@ MultiPlayer.prototype.playback = function (providerName, media) {
 
     this.currentProvider = providerName;
     return newProvider.init(this.elementId, (event, data) => {
-        console.log("MP event: " + event);
+        console.log("MP event: " + event, data);
 
         let handlers = this.handlers[event];
 
