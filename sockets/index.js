@@ -1,5 +1,5 @@
 
-function init(io) {
+function init(io, state) {
     io.on("connection", (socket) => {
         console.log("socket session: " + JSON.stringify(socket.handshake));
         console.log("socket session id: " + socket.handshake.sessionID);

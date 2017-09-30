@@ -13,9 +13,11 @@ const sockets = require("./sockets/");
 
 // Business logic
 const LobbyManager = require("./libs/lobbies.js");
+const UserManager = require("./libs/users");
 
 let state = {
-    lobbies: new LobbyManager()
+    lobbies: new LobbyManager(),
+    users: new UserManager()
 };
 
 // Setup servers
@@ -50,6 +52,7 @@ app.use(express.static(__dirname + "/public/"));
 app.use(favicon(path.join(__dirname, "public", "img", "favicon.ico")));
 
 // Wire up business logic with express and socket.io
+app.use(state.users.creator());
 app.use(routes(state));
 sockets(io, state);
 
