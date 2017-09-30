@@ -11,5 +11,5 @@ player.on("ready", () => {
     console.log("ready");
     player.setCurrentTime(50);
     player.play();
-    
+    //player.destroy();
 });
