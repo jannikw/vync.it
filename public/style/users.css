@@ -1,0 +1,12 @@
+#users {
+    float: right;
+    width: 75%;
+}
+
+#users ul li {
+    text-align: right;
+}
+
+#users ul li span {
+    margin-right: 5px;
+}

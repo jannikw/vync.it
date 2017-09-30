@@ -1,4 +1,4 @@
-/* global $:true */
+/* global $:true Vync:true */
 
 var leftScrolled = 0;
 
@@ -15,5 +15,13 @@ function scrollPlaylistRight() {
     if (scrollPercent < 100) {
         var nextFirst = $("#playlist-scroll img")[++leftScrolled];
         $("#playlist-scroll").scrollLeft(nextFirst.offsetLeft);
+    }
+}
+
+function submitNewUrl() {
+    var url = $("#addurl input").val();
+    if (url.trim() != "") {
+        Vync.socket.emit("addvideo", "url");
+        $("#addurl input").val("");
     }
 }

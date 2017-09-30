@@ -1,0 +1,15 @@
+#waiting {
+    text-align: center;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+#waiting span {
+    font-size: 24px;
+}
+
+#player {
+    background-color: #EEEEEE;
+    margin-top: 7.5%;
+}

@@ -7,14 +7,8 @@ body {
     margin-bottom: 60px;
 }
 
-.footer {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    /* Set the fixed height of the footer here */
-    height: 60px;
-    line-height: 60px; /* Vertically center the text there */
-    background-color: #f5f5f5;
+nav .logo {
+    width: 32px;
 }
 
 #content .col-3 {
@@ -26,68 +20,18 @@ body {
     height: 100%;
 }
 
-#player {
-    background-color: red;
-    margin-top: 7.5%;
-}
-
-#playlist {
-    position: relative;
-    border: 1px solid black;
-}
-
-#playlist .button {
+footer {
     position: absolute;
-    top: 35%;
-    color: grey;
-}
-
-#playlist .button .circle {
-    color: white;
-}
-
-#playlist .button .circle-full {
-    color: black;
-}
-
-#playlist-scroll {
-    overflow: auto;
-    white-space: nowrap;
-    overflow-x: hidden;
-}
-
-#playlist-scroll .upcoming {
-    display: inline-block;
-    width: 25%;
-}
-
-#playlist-scroll .upcoming img {
+    bottom: 0;
     width: 100%;
+    /* Set the fixed height of the footer here */
+    height: 60px;
+    line-height: 60px; /* Vertically center the text there */
+    background-color: #f5f5f5;
 }
 
-#playlist-left {
-    left: 10px;
-}
-
-#playlist-right {
-    right: 10px;
-}
-
-#users {
-    float: right;
-    width: 75%;
-}
-
-#users ul li {
-    text-align: right;
-}
-
-#users ul li span {
-    margin-right: 5px;
-}
-
-footer #logo img {
-    width: 30px;
+footer .logo img {
+    width: 32px;
 }
 
 footer #logo .credit {

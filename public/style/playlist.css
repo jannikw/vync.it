@@ -1,0 +1,50 @@
+#addurl input {
+    margin-right: 5px;
+    border-radius: 5px;
+}
+
+#addurl button {
+    border-radius: 5px;
+}
+
+#playlist {
+    position: relative;
+    border: 1px solid black;
+}
+
+#playlist .button {
+    position: absolute;
+    top: 35%;
+    color: grey;
+}
+
+#playlist .button .circle {
+    color: white;
+}
+
+#playlist .button .circle-full {
+    color: black;
+}
+
+#playlist-scroll {
+    overflow: auto;
+    white-space: nowrap;
+    overflow-x: hidden;
+}
+
+#playlist-scroll .upcoming {
+    display: inline-block;
+    width: 25%;
+}
+
+#playlist-scroll .upcoming img {
+    width: 100%;
+}
+
+#playlist-left {
+    left: 10px;
+}
+
+#playlist-right {
+    right: 10px;
+}
