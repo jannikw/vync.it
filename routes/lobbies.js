@@ -19,7 +19,7 @@ module.exports = function (state) {
         let lobby = state.lobbies.getLobbyById(req.params.id);
 
         if (lobby) {
-            res.send("lobby found: " + lobby.title);
+            res.render("lobby");
         } else {
             res.send("lobby not found");
         }

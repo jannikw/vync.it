@@ -26,6 +26,15 @@
     color: black;
 }
 
+#playlist-left {
+    left: 10px;
+    z-index: 2;
+}
+
+#playlist-right {
+    right: 10px;
+}
+
 #playlist-scroll {
     overflow: auto;
     white-space: nowrap;
@@ -33,6 +42,7 @@
 }
 
 #playlist-scroll .upcoming {
+    position: relative;
     display: inline-block;
     width: 25%;
 }
@@ -41,10 +51,10 @@
     width: 100%;
 }
 
-#playlist-left {
-    left: 10px;
-}
-
-#playlist-right {
-    right: 10px;
+#playlist-scroll .upcoming .duration {
+    color: white;
+    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+    position: absolute;
+    left: 5px;
+    bottom: 5px;
 }

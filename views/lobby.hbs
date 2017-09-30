@@ -1,0 +1,31 @@
+<div id="content" class="container-fluid">
+    <div class="row">
+        <div class="col-3">
+            {{> sidebar-left}}
+        </div>
+        <div class="col-6">
+            <div id="player">
+                <div id="waiting">
+                    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+                    <br>
+                    <span>Waiting for video...</span>
+                </div>
+            </div>
+            {{> playlist}}
+        </div>
+        <div class="col-3">
+            {{> users}}
+        </div>
+    </div>
+</div>
+
+{{#contentFor "pageScripts"}}
+    <script src="/lib/q.js"></script>
+    <script src="/js/providers/youtube.js" ></script>
+    <script src="/js/providers/vimeo.js" ></script>
+    <script src="/js/multi-player.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+
+    <script src="/js/vync.js"></script>
+    <script src="/js/playlist.js"></script>
+{{/contentFor}}
