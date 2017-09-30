@@ -16,34 +16,42 @@ function MultiPlayer(elementId) {
 
 MultiPlayer.prototype.play = function () {
     if (this.currentProvider) {
-        this.providers[this.currentProvider].play();
+        return this.providers[this.currentProvider].play();
     }
+
+    return null;
 };
 
 MultiPlayer.prototype.pause = function () {
     if (this.currentProvider) {
-        this.providers[this.currentProvider].pause();
+        return this.providers[this.currentProvider].pause();
     }
+
+    return null;
 };
 
 MultiPlayer.prototype.stop = function () {
     if (this.currentProvider) {
-        this.providers[this.currentProvider].stop();
+        return this.providers[this.currentProvider].stop();
     }
+
+    return null;
 };
 
-MultiPlayer.prototype.getCurrentTime = function (callback) {
+MultiPlayer.prototype.getCurrentTime = function () {
     if (this.currentProvider) {
-        this.providers[this.currentProvider].getCurrentTime(callback);
-    } else {
-        callback(null);
+        return this.providers[this.currentProvider].getCurrentTime();
     }
+
+    return null;
 };
 
 MultiPlayer.prototype.setCurrentTime = function (seconds) {
     if (this.currentProvider) {
-        this.providers[this.currentProvider].setCurrentTime(seconds);
+        return this.providers[this.currentProvider].setCurrentTime(seconds);
     }
+
+    return null;
 };
 
 MultiPlayer.prototype.playback = function (providerName, media) {
@@ -56,8 +64,7 @@ MultiPlayer.prototype.playback = function (providerName, media) {
 
     // Check whether old an new provider are the same
     if (newProvider == oldProvider) {
-        newProvider.playback(media);
-        return;
+        return newProvider.playback(media);
     }
 
     if (oldProvider) {
@@ -65,7 +72,7 @@ MultiPlayer.prototype.playback = function (providerName, media) {
     }
 
     this.currentProvider = providerName;
-    newProvider.init(this.elementId, (event, data) => {
+    return newProvider.init(this.elementId, (event, data) => {
         console.log("MP event: " + event);
 
         let handlers = this.handlers[event];
@@ -73,8 +80,7 @@ MultiPlayer.prototype.playback = function (providerName, media) {
         if (handlers != null && handlers.length > 0) {
             handlers.forEach((handler) => handler(data));
         }
-    });
-    newProvider.playback(media);
+    }).then(() => newProvider.playback(media));
 };
 
 MultiPlayer.prototype.on = function (event, handler) {
