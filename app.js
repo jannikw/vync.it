@@ -29,9 +29,9 @@ app.use(favicon(path.join(__dirname, "public", "img", "favicon.ico")));
 
 app.get("/", function (req, res) {
     res.locals.users = [
-        { name: "Test1"},
-        { name: "Test2"},
-        { name: "Test3"},
+        { name: "User 1"},
+        { name: "User 2"},
+        { name: "User 3"},
     ];
 
     res.render("index");

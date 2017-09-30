@@ -1,16 +1,13 @@
-<h1>Welcome!</h1>
-
-<h2>List of users</h2>
-
-<ul>
-    {{#each users}}
-    <li>
-        {{> user}}
-    </li>
-    {{/each}}
-</ul>
-
-<script src="/socket.io/socket.io.js"></script>
-<script>
-  var socket = io();
-</script>
+<div id="content" class="container-fluid">
+    <div class="row">
+        <div class="col-3">
+            {{> sidebar-left}}
+        </div>
+        <div class="col-6">
+            <div id="player"> </div>
+        </div>
+        <div class="col-3">
+            {{> users}}
+        </div>
+    </div>
+</div>

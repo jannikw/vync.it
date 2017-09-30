@@ -1,0 +1,10 @@
+<div id="users">
+    <ul class="list-group">
+        {{#each users}}
+            <li class="list-group-item">
+                <span>{{this.name}}</span>
+                <i class="fa fa-times-circle-o" aria-hidden="true" title="Kick {{this.name}}"></i>
+            </li>
+        {{/each}}
+    </ul>
+</div>
