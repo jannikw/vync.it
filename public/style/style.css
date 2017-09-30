@@ -31,6 +31,10 @@ body {
     margin-top: 7.5%;
 }
 
+#content #playlist ul li img {
+    width: 50%;
+}
+
 #content #users {
     float: right;
     width: 75%;
