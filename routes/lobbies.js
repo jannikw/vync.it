@@ -17,6 +17,9 @@ module.exports = function (state) {
 
     router.get("/:id/", function (req, res) {
         let lobby = state.lobbies.getLobbyById(req.params.id);
+        let user = state.users.getUserById(req.session.userId);
+
+        req.locals.user = user;
 
         if (lobby) {
             res.render("lobby");
