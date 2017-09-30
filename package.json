@@ -1,0 +1,24 @@
+{
+  "name": "vync.it",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jannikw/vync.it.git"
+  },
+  "author": "Jannik (@jannikw)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jannikw/vync.it/issues"
+  },
+  "homepage": "https://github.com/jannikw/vync.it#readme",
+  "dependencies": {
+    "express": "^4.16.1",
+    "express-hbs": "^1.0.4",
+    "express-session": "^1.15.6"
+  }
+}
