@@ -7,9 +7,14 @@ const path = require("path");
 const socketio = require("socket.io");
 const http = require("http");
 
+const routes = require("./routes/");
+const sockets = require("./sockets/");
+
 let app = express();
 let server = http.createServer(app);
 let io = socketio.listen(server);
+
+sockets(io);
 
 app.use(morgan("dev"));
 app.set("view engine", "hbs");
@@ -27,29 +32,10 @@ app.use(session({
 app.use(express.static(__dirname + "/public/"));
 app.use(favicon(path.join(__dirname, "public", "img", "favicon.ico")));
 
-app.get("/", function (req, res) {
-    res.locals.users = [
-        { name: "User 1"},
-        { name: "User 2"},
-        { name: "User 3"},
-    ];
-    res.locals.upcoming = [
-        { id: "tdUX3ypDVwI", title: "Making Life Multiplanetary"},
-        { id: "bvim4rsNHkQ", title: "How Not to Land an Orbital Rocket Booster"},
-        { id: "zqE-ultsWt0", title: "BFR | Earth to Earth"},
-        { id: "tdUX3ypDVwI", title: "Making Life Multiplanetary"},
-        { id: "bvim4rsNHkQ", title: "How Not to Land an Orbital Rocket Booster"},
-        { id: "zqE-ultsWt0", title: "BFR | Earth to Earth"},
-        { id: "tdUX3ypDVwI", title: "Making Life Multiplanetary"},
-        { id: "bvim4rsNHkQ", title: "How Not to Land an Orbital Rocket Booster"},
-        { id: "zqE-ultsWt0", title: "BFR | Earth to Earth"},
-    ];
-
-    res.render("index");
-});
+app.use(routes);
 
 io.on("connection", function (socket) {
-    console.log("user connected");
+    console.log("user connected: " + socket);
 });
 
 server.listen(8080, () => {
