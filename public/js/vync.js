@@ -13,7 +13,7 @@ Vync.socket.on("pause", () => this.player.pause());
 Vync.socket.on("seek", (time) => this.player.setCurrentTime(time));
 Vync.socket.on("setVideo", (platform, videoId) => this.player.playback(platform, videoId));
 
-Vync.socket.on("userupdate"), (data) => updateUserlist(data);
+Vync.socket.on("userupdate", (data) => updateUserlist(data));
 
 function updateUserlist(users) {
     $("#users ul").each(function() {

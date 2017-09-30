@@ -12,6 +12,23 @@ Lobby.prototype.join = function (user) {
     }
 
     this.members[user.id] = user;
+    this.sendUserUpdate();
+};
+
+Lobby.prototype.sendUserUpdate = function () {
+    this.notifyAll("userupdate", 
+        this.members.map((member) => {
+            return {
+                id: member.id,
+                name: member.name
+            };
+        }));
+};
+
+Lobby.prototype.notifyAll = function (event, data) {
+    this.members.forEach((member) => {
+        member.notify(event, data);
+    });
 };
 
 Lobby.prototype.isMember = function (user) {

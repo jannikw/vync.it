@@ -14,6 +14,12 @@ User.prototype.setSocket = function (socket) {
     this.socket = socket;
 };
 
+User.prototype.notify = function (event, data) {
+    if (this.socket) {
+        this.socket.emit(event, data);
+    }
+};
+
 function UserManager() {
     this.users = [];
 }
