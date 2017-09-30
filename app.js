@@ -1,9 +1,11 @@
 const express = require("express");
 const hbs = require("express-hbs");
 const session = require("express-session");
+const morgan = require("morgan");
 
 let app = express();
 
+app.use(morgan("dev"));
 app.set("view engine", "hbs");
 app.engine("hbs", hbs.express4({
     defaultLayout: __dirname + "/views/layouts/default.hbs",
