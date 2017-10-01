@@ -16,7 +16,7 @@
         <div class="col-3">
             {{> rename-modal }}
             <div id="self">
-                <span>Ich</span>
+                <span>{{ user.name }}</span>
                 <i class="fa fa-pencil-square-o fa-lg" aria-hidden="true" onclick="$('#renameModal').modal('show');"></i>
             </div>
             {{> users}}

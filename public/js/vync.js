@@ -29,6 +29,10 @@ Vync.socket.on("confirmName", (name) => updateOwnName(name));
 
 Vync.socket.on("userupdate", (data) => updateUserlist(data));
 
+$("#renameModal").on("show.bs.modal", function(){
+    $("#newName").val("");
+});
+
 function changeName() {
     if (!$("#newName") || $("#newName").val().trim() == "")
         return;
