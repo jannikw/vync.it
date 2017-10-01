@@ -20,6 +20,8 @@ Player.prototype.removeSession = function (id) {
 };
 
 Player.prototype.addMedia = function (provider, media) {
+    console.log("added playist item: provider=" + provider + ", media=" + media);
+
     this.playlist.push({
         provider: provider,
         media: media

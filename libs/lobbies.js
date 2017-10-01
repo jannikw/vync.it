@@ -1,4 +1,5 @@
 const Player = require("./player");
+const inputParser = require("./parser.js");
 
 function Lobby(id) {
     this.id = id;
@@ -38,10 +39,13 @@ Lobby.prototype.addSocket = function (socket) {
             this.leave(user);
         }
 
-        this.player.unblock();
+        this.player.unblock(socketId);
     });
 
-    socket.on("timeupdate", (data) => this.player.checkClientTime(data.seconds));
+    socket.on("timeupdate", (data) => {
+        this.player.unblock(socketId);
+        this.player.checkClientTime(data.seconds)
+    });
     socket.on("ready", () => this.player.unblock(socketId));
     socket.on("buffering", () => this.player.block(socketId));
     socket.on("playing", () =>  {
@@ -49,10 +53,8 @@ Lobby.prototype.addSocket = function (socket) {
         this.player.play();
     });
     socket.on("paused", () => {
+        this.player.unblock(socketId);
         this.player.pause();
-    });
-    socket.on("playing", () => {
-        this.player.play();
     });
     socket.on("next", () => {
         this.player.next();
@@ -64,7 +66,11 @@ Lobby.prototype.addSocket = function (socket) {
     });
 
     socket.on("addMedia", (input) => {
-        this.player.addMedia("youtube", input);
+        let result = inputParser(input);
+
+        if (result) {
+            this.player.addMedia(result.provider, result.media);
+        }
     });
 
     let current = this.player.getCurrentMedia();

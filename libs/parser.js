@@ -12,4 +12,4 @@ function parseInput(media) {
     }
 }
 
-module.exports.parse = parseInput;
+module.exports = parseInput;
