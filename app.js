@@ -63,10 +63,6 @@ app.use(state.users.creator());
 app.use(routes(state));
 sockets(io, state);
 
-io.on("connection", function (socket) {
-    console.log("socket connected: " + socket.conn.id);
-});
-
 // Start the server
 server.listen(8080, () => {
     console.log("Server listening on port 8080...");

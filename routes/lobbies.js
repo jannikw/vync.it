@@ -10,8 +10,6 @@ module.exports = function (state) {
     router.get("/create", function (req, res) {
         let lobby = state.lobbies.createLobby();
 
-        req.session.lobby = lobby.id;
-
         res.redirect(lobby.id);
     });
 
