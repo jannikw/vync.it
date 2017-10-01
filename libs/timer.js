@@ -30,6 +30,7 @@ Timer.prototype.start = function () {
 Timer.prototype.stop = function () {
     if (this.started) {
         this.elapsed = this.elapsedTime();
+        this.started = null;
     }
 };
 
