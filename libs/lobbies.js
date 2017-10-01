@@ -6,12 +6,14 @@ function Lobby(id) {
 }
 
 Lobby.prototype.join = function (user) {
-    if (this.members[user.id]) {
+    let index = this.members.indexOf(user);
+
+    if (index != -1) {
         console.warn("user " + user.id + " is already in lobby " + this.id);
         return;
     }
 
-    this.members[user.id] = user;
+    this.members.push(user);
     this.sendUserUpdate();
 
     user.events.once("disconnect", () => this.leave(user));
@@ -45,7 +47,7 @@ Lobby.prototype.notifyAll = function (event, data) {
 };
 
 Lobby.prototype.isMember = function (user) {
-    return this.members[user.id] != null;
+    return this.members.indexOf(user.id) != -1;
 };
 
 function LobbyManager() {
