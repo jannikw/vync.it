@@ -21,7 +21,6 @@ function scrollPlaylistRight() {
     var scrollPercent = 100 * element.scrollLeft / (element.scrollWidth - element.clientWidth);
     if (scrollPercent < 100) {
         var nextFirst = $("#playlist-scroll .upcoming")[++leftScrolled];
-        console.log(nextFirst);
         $("#playlist-scroll").scrollLeft(nextFirst.offsetLeft);
     }
 }
@@ -36,11 +35,11 @@ function submitNewUrl() {
 
 function playlistAdd(provider, media) {
     var item = {
-        thumbnail: provider == "youtube" ? "https://img.youtube.com/vi/" + media + "/mqdefault.jpg" : provider == "vimeo" ? "/img/vimeo.png" : null,
+        thumbnailUrl: provider == "youtube" ? "https://img.youtube.com/vi/" + media + "/mqdefault.jpg" : provider == "vimeo" ? "/img/vimeo.png" : null,
         duration: media
     };
     $("#playlist-scroll").append(Vync.templates.playlistentry(item));
-    $("#addurl button").stop().css("background-color", "green").animate({ backgroundColor: "none"}, 500);
+    //$("#addurl button").stop().css("background-color", "green").animate({ backgroundColor: "white"}, 500);
 }
 
 function playlistRemove() {
