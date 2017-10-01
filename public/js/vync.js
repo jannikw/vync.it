@@ -1,7 +1,7 @@
 /* global $:true io:true Vync:true Handlebars */
 
 $(document).ready(function() {
-    var height = ($("#content #player").css("width").replace("px", "") * 0.5625) + "px";
+    var height = ($("#content #player").width() * 0.5625) + "px";
     $("#content #player").css("height", height);
 });
 
@@ -27,6 +27,7 @@ Vync.socket.on("setVideo", (platform, videoId) => this.player.playback(platform,
 Vync.socket.on("userupdate", (data) => updateUserlist(data));
 
 function updateUserlist(users) {
+    console.log(users);
     $("#users ul li").each(function() {
         var item = getByProperty(users, "id", $(this).attr("id"));
         if (item) {
@@ -44,7 +45,7 @@ function updateUserlist(users) {
 
 function getByProperty(haystack, property, needle) {
     $.each(haystack, function(index, value) {
-        if (value.id == needle)
+        if (value && value.id == needle)
             return value;
     });
 }

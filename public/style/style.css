@@ -30,6 +30,11 @@ body {
 
 /* ---------------------------------------------- */
 
+.no-decor, .no-decor:hover, .no-decor:active {
+    color: black;
+    text-decoration: none !important;
+}
+
 nav .logo {
     width: 32px;
 }
@@ -47,12 +52,34 @@ nav .logo {
     text-align: center;
 }
 
-#description h1 {
+#title {
+    white-space: nowrap;
+}
+
+#title h1 {
     font-size: 80px;
+    display: inline-block
+}
+
+#pronunciation {
+    position: absolute;
+    margin-left: 10px;
+    display: none;
+}
+
+#description h2 {
+    font-size: 30px;
 }
 
 #btnCreate {
     width: 100%;
+    font-size: 50px;
+    margin-top: 100px;
+    margin-bottom: 100px;
+}
+
+#players .player {
+    text-align: center;
 }
 
 footer {

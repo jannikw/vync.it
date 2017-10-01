@@ -3,11 +3,49 @@
         <div class="col-4"></div>
         <div class="col-4">
             <div id="description">
-                <h1>vync.it</h1>
-                The best video watching experience
+                <div id="title">
+                    <h1>vync.it</h1>
+                    <span id="pronunciation">[wiŋk it]</span>
+                </div>
+                
+                <h2>The best video watching experience</h2>
+
+                <span>
+                    Created using
+                    <a href="https://nodejs.org" target="_blank">node.js</a>, 
+                    <a href="https://expressjs.com" target="_blank">express</a>, 
+                    <a href="https://getbootstrap.com/" target="_blank">bootstrap</a>, 
+                    <a href="http://fontawesome.io" target="_blank">fontawesome</a>
+                    at
+                    <a href="https://dohack.io" target="_blank">DO!Hack 2017</a>
+                </span>
             </div>
             <a href="/lobbies/create" id="btnCreate" class="btn btn-primary">Create Room</a>
+            <div id="players" class="row align-bottom">
+                <div class="player col-4" title="YouTube">
+                    <i class="fa fa-youtube-play fa-5x" aria-hidden="true"></i>
+                    <br>
+                    <i class="fa fa-check" aria-hidden="true"></i>
+                    <span>Supported</span>
+                </div>
+                <div class="player col-4" title="Vimeo">
+                    <i class="fa fa-vimeo fa-5x" aria-hidden="true"></i>
+                    <br>
+                    <i class="fa fa-check" aria-hidden="true"></i>
+                    <span>Supported</span>
+                </div>
+                <div class="player col-4" title="Twitch">
+                    <i class="fa fa-twitch fa-5x" aria-hidden="true"></i>
+                    <br>
+                    <i class="fa fa-clock-o" aria-hidden="true"></i>
+                    <span>Coming soon</span>
+                </div>
+            </div>
         </div>
         <div class="col-4"></div>
     </div>
 </div>
+
+{{#contentFor "pageScripts"}}
+    <script src="/js/index.js" ></script>
+{{/contentFor}}
