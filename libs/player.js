@@ -26,7 +26,9 @@ Player.prototype.addMedia = function (provider, media) {
     });
     this.events.emit("playlistRemove", provider, media);
 
-    this.next();
+    if (this.currentMedia == null) {
+        this.next();
+    }
 };
 
 Player.prototype.getCurrentMedia = function () {
