@@ -7,6 +7,11 @@ function User(id, name) {
     this.events = new EventEmitter();
 }
 
+User.prototype.updateName = function (name) {
+    this.name = name;
+    this.events.emit("updateName", this);
+};
+
 function UserManager() {
     this.users = [];
 }
