@@ -33,3 +33,16 @@ function submitNewUrl() {
         $("#addurl input").val("");
     }
 }
+
+function addPlaylistVideo(provider, media) {
+    var item = {
+        thumbnail: provider == "youtube" ? "https://img.youtube.com/vi/" + media + "/mqdefault.jpg" : provider == "vimeo" ? "/img/vimeo.png" : null,
+        duration: media
+    };
+    $("#playlist-scroll").append(Vync.templates.playlistentry(item));
+    $("#addurl button").stop().css("background-color", "green").animate({ backgroundColor: "none"}, 500);
+}
+
+function shiftPlaylist() {
+    $("#playlist-scroll .upcoming").first().remove();
+}

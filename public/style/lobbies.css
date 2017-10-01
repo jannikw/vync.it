@@ -1,0 +1,11 @@
+#lobbies .title {
+    font-size: 24px;
+}
+
+#lobbies .groupRight {
+    float: right;
+}
+
+#lobbies .users, #lobbies .videos {
+    margin-right: 5px;
+}

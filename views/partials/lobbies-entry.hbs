@@ -1,0 +1,8 @@
+<li class="list-group-item">
+    <span class="title">{{ this.id }}</span>
+    <div class="groupRight">
+        <span class="users"><i class="fa fa-user fa-lg" aria-hidden="true"></i> {{ this.members.length }}</span>
+        <span class="videos"><i class="fa fa-video-camera fa-lg" aria-hidden="true"></i> {{ this.player.playlist.length }}</span>
+        <a href="/lobbies/{{ this.id }}" class="btn btn-secondary">Join!</a>
+    </div>
+</li>

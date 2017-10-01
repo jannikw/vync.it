@@ -41,6 +41,8 @@ Vync.socket.on("confirmName", (name) => updateOwnName(name));
 
 Vync.socket.on("confirmName", (name) => updateOwnName(name));
 Vync.socket.on("userupdate", (data) => updateUserlist(data));
+Vync.socket.on("queueVideo", (provider, media) => updateUserlist(provider, media));
+Vync.socket.on("playlistShift", () => shiftPlaylist());
 
 /* Local player events */
 Vync.player.on("timeupdate", (data) => {
@@ -64,15 +66,6 @@ Vync.player.on("ready", () => {
 Vync.player.on("error", (data) => {
     Vync.socket.emit("error", data);
 });
-
-function addPlaylistVideo(provider, media) {
-    var item = {
-        thumbnail: provider == "youtube" ? "https://img.youtube.com/vi/" + media + "/mqdefault.jpg" : provider == "vimeo" ? "/img/vimeo.png" : null,
-        duration: media
-    };
-    $("#playlist-scroll").append(Vync.templates.playlistentry(item));
-    $("#addurl button").stop().css("background-color", "green").animate({ backgroundColor: "none"}, 500);
-}
 
 /* Change name dialog */
 $("#renameModal").on("show.bs.modal", function() {

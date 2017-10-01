@@ -4,7 +4,9 @@ module.exports = function (state) {
     const router = new Router();
 
     router.get("/", function (req, res) {
-        res.send("show me teh lobbies!!");
+        res.locals.lobbies = state.lobbies.getAllLobbies();
+
+        res.render("lobbies");
     });
 
     router.get("/create", function (req, res) {
@@ -27,7 +29,7 @@ module.exports = function (state) {
 
             res.render("lobby");
         } else {
-            res.send("lobby not found");
+            res.redirect("/");
         }
     });
 

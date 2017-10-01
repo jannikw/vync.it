@@ -120,7 +120,7 @@ function LobbyManager() {
     this.count = 0;
 }
 
-LobbyManager.getAllLobbies = function () {
+LobbyManager.prototype.getAllLobbies = function () {
     return this.lobbies;
 };
 
