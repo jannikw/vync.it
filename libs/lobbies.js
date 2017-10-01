@@ -120,6 +120,10 @@ function LobbyManager() {
     this.count = 0;
 }
 
+LobbyManager.getAllLobbies = function () {
+    return this.lobbies;
+};
+
 LobbyManager.prototype.createLobby = function () {
     this.count++;
 
