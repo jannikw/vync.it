@@ -10,7 +10,8 @@ Vync = {
         }
 
         return {
-            user: load("template-user")
+            user: load("template-user"),
+            playlistentry: load("template-playlist-entry")
         };
     })(),
     player: new MultiPlayer("player")
@@ -27,9 +28,10 @@ $(document).ready(function() {
 Vync.socket.on("play", () => Vync.player.play());
 Vync.socket.on("pause", () => Vync.player.pause());
 Vync.socket.on("seek", (time) => Vync.player.setCurrentTime(time));
-Vync.socket.on("setVideo", (platform, videoId) => Vync.player.playback(platform, videoId));
-Vync.socket.on("confirmName", (name) => updateOwnName(name));
+Vync.socket.on("playback", (platform, videoId) => Vync.player.playback(platform, videoId));
+Vync.socket.on("addPlaylistVideo", addPlaylistVideo);
 
+Vync.socket.on("confirmName", (name) => updateOwnName(name));
 Vync.socket.on("userupdate", (data) => updateUserlist(data));
 
 /* Local player events */
@@ -54,6 +56,14 @@ Vync.player.on("ready", () => {
 Vync.player.on("error", (data) => {
     Vync.socket.emit("error", data);
 });
+
+function addPlaylistVideo(provider, media) {
+    var item = {
+        thumbnail: provider == "youtube" ? "https://img.youtube.com/vi/" + media + "/mqdefault.jpg" : provider == "vimeo" ? "/img/vimeo.png" : null,
+        duration: media
+    };
+    $("#playlist-scroll").append(Vync.templates.playlistentry(item));
+}
 
 /* Change name dialog */
 $("#renameModal").on("show.bs.modal", function(){

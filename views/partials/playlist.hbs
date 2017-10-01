@@ -21,11 +21,8 @@
         </span>
     </a>
     <div id="playlist-scroll">
-        {{#each upcoming}}
-            <div class="upcoming">
-                <img src="https://img.youtube.com/vi/{{this.id}}/mqdefault.jpg" />
-                <span class="duration">{{this.duration}}</span>
-            </div>
+        {{#each lobby.player.playlist}}
+            {{> playlist-entry}}
         {{/each}}
     </div>
 </div>
