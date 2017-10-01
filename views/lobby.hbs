@@ -17,7 +17,7 @@
             {{> rename-modal }}
             <div id="self">
                 <span>{{ user.name }}</span>
-                <i class="fa fa-pencil-square-o fa-lg" aria-hidden="true" onclick="$('#renameModal').modal('show');"></i>
+                <i class="fa fa-pencil-square-o fa-lg" aria-hidden="true" onclick="$('#renameModal').modal('show'); setTimeout(function() {$('#newName').focus()}, 500);"></i>
             </div>
             {{> users}}
         </div>

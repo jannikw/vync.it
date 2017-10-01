@@ -71,10 +71,11 @@ function addPlaylistVideo(provider, media) {
         duration: media
     };
     $("#playlist-scroll").append(Vync.templates.playlistentry(item));
+    $("#addurl button").stop().css("background-color", "green").animate({ backgroundColor: "none"}, 500);
 }
 
 /* Change name dialog */
-$("#renameModal").on("show.bs.modal", function(){
+$("#renameModal").on("show.bs.modal", function() {
     $("#newName").val("");
 });
 
@@ -88,7 +89,7 @@ function changeName() {
 
 /* User list update */
 function updateOwnName(name) {
-    $("#self span").val(name);
+    $("#self span").text(name);
 }
 
 function updateUserlist(users) {

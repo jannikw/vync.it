@@ -50,6 +50,7 @@ nav .logo {
 
 #description {
     text-align: center;
+    margin-top: 75px;
 }
 
 #title {
@@ -108,6 +109,6 @@ footer .logo img {
     width: 32px;
 }
 
-footer #logo .credit {
-    margin-left: 5%;
+footer .logo .credit {
+    margin-left: 25px;
 }
