@@ -18,10 +18,13 @@ Lobby.prototype.join = function (user) {
 };
 
 Lobby.prototype.leave = function (user) {
-    if (this.members[user.id]) {
-        delete this.members[user.id];
+    let index = this.members.indexOf(user);
+    
+    if (index == -1) {
+        return;
     }
 
+    this.members.splice(index, 1);
     this.sendUserUpdate();
 };
 
