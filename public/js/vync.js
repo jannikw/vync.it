@@ -1,11 +1,7 @@
 /* global $:true io:true Vync:true Handlebars */
 
-$(document).ready(function() {
-    var height = ($("#content #player").width() * 0.5625) + "px";
-    $("#content #player").css("height", height);
-});
-
 Vync = {
+    lobbyId: window.location.pathname.split("/")[2],
     socket: io(),
     templates: (() => {
         function load(id) {
@@ -19,6 +15,12 @@ Vync = {
     })()
 };
 
+$(document).ready(function() {
+    var height = ($("#content #player").width() * 0.5625) + "px";
+    $("#content #player").css("height", height);
+    Vync.socket.emit("enter", Vync.lobbyId);
+});
+
 Vync.socket.on("play", () => this.player.play());
 Vync.socket.on("pause", () => this.player.pause());
 Vync.socket.on("seek", (time) => this.player.setCurrentTime(time));
@@ -27,7 +29,6 @@ Vync.socket.on("setVideo", (platform, videoId) => this.player.playback(platform,
 Vync.socket.on("userupdate", (data) => updateUserlist(data));
 
 function updateUserlist(users) {
-    console.log(users);
     $("#users ul li").each(function() {
         var item = getByProperty(users, "id", $(this).attr("id"));
         if (item) {
