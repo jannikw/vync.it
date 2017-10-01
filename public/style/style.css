@@ -83,6 +83,17 @@ nav .logo {
     text-align: center;
 }
 
+#self {
+    text-align: right;
+    vertical-align: middle;
+    margin: 5px;
+}
+
+#self span {
+    font-size: 20px;
+    margin-right: 10px;
+}
+
 footer {
     position: absolute;
     bottom: 0;

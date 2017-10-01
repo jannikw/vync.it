@@ -28,6 +28,14 @@ Vync.socket.on("setVideo", (platform, videoId) => this.player.playback(platform,
 
 Vync.socket.on("userupdate", (data) => updateUserlist(data));
 
+function changeName() {
+    if (!$("#newName") || $("#newName").val().trim() == "")
+        return;
+    var newName = $("#newName").val();
+    Vync.socket.emit("changeName", newName);
+    $("#renameModal").modal("hide");
+}
+
 function updateUserlist(users) {
     $("#users ul li").each(function() {
         var item = getByProperty(users, "id", $(this).attr("id"));
