@@ -5,22 +5,30 @@ function Lobby(id) {
     this.members = [];
     this.sockets = [];
     this.playlist = [];
+
+    this.updateNamesHandler = () => this.notifyUserUpdate();
 }
 
 Lobby.prototype.addSocket = function (socket) {
     this.sockets.push(socket);
 
+    let userId = socket.handshake.session.userId;
+    let user = this.members.find((user) => user.id == userId);
+
     socket.on("disconnect", () => {
-        let userId = socket.handshake.session.userId;
         let index = this.sockets.indexOf(socket);
         this.sockets.splice(index, 1);
 
         var userConnected = this.sockets.some((socket) => socket.handshake.session.userId == userId); 
 
         if (!userConnected) {
-            let user = this.members.find((user) => user.id == userId);
             this.leave(user);
         }
+    });
+
+    socket.on("changeName", (name) => {
+        user.updateName(name);
+        socket.emit("confirmName", name);
     });
 };
 
@@ -35,7 +43,7 @@ Lobby.prototype.join = function (user) {
     this.members.push(user);
     this.notifyUserUpdate();
 
-    user.events.once("disconnect", () => this.leave(user));
+    user.events.on("updateName", this.updateNamesHandler);
 };
 
 Lobby.prototype.leave = function (user) {
@@ -44,6 +52,8 @@ Lobby.prototype.leave = function (user) {
     if (index == -1) {
         return;
     }
+
+    user.events.removeListener("updateName", this.updateNamesHandler);
 
     this.members.splice(index, 1);
     this.notifyUserUpdate();
