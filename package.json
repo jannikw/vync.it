@@ -10,7 +10,7 @@
     "type": "git",
     "url": "git+https://github.com/jannikw/vync.it.git"
   },
-  "author": "Jannik (@jannikw)",
+  "author": "Jannik (@jannikw), Tobi (@tobire)",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/jannikw/vync.it/issues"
