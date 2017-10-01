@@ -17,6 +17,8 @@ function Lobby(id) {
     this.player.events.on("pause", () => this.notifyAll("pause"));
     this.player.events.on("stop", () => this.notifyAll("stop"));
     this.player.events.on("adjustTime", (time) => this.notifyAll("setCurrentTime", time));
+    this.player.events.on("playlistAdd", (provider, media) => this.notifyAll("playlistAdd", provider, media));
+    this.player.events.on("playlistRemove", (provider, media) => this.notifyAll("playlistRemove", provider, media));
 }
 
 Lobby.prototype.addSocket = function (socket) {
@@ -51,6 +53,9 @@ Lobby.prototype.addSocket = function (socket) {
     });
     socket.on("playing", () => {
         this.player.play();
+    });
+    socket.on("next", () => {
+        this.player.next();
     });
 
     socket.on("changeName", (name) => {

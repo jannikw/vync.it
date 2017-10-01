@@ -36,6 +36,7 @@ Vync.socket.on("play", () => Vync.player.play().done());
 Vync.socket.on("pause", () => Vync.player.pause().done());
 Vync.socket.on("setCurrentTime", (time) => Vync.player.setCurrentTime(time).done());
 Vync.socket.on("playback", (platform, videoId) => Vync.player.playback(platform, videoId).done());
+Vync.socket.on("stop", () => Vync.player.stop());
 
 Vync.socket.on("confirmName", (name) => updateOwnName(name));
 

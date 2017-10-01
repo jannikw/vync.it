@@ -24,17 +24,25 @@ Player.prototype.addMedia = function (provider, media) {
         provider: provider,
         media: media
     });
+    this.events.emit("playlistRemove", provider, media);
 
-    if (this.currentMedia == null) {
-        this.currentMedia = this.playlist.shift();
-        this.disiredState = "playing";
-    }
-
-    this.updateState();
+    this.next();
 };
 
 Player.prototype.getCurrentMedia = function () {
     return this.currentMedia;
+};
+
+Player.prototype.next = function () {
+    this.disiredState = "stopped";
+    this.updateState();
+
+    if (this.playlist.length > 0) {
+        this.currentMedia = this.playlist.shift();
+        this.disiredState = "playing";
+        this.updateState();
+        this.events.emit("playlistRemove", this.currentMedia.provider, this.currentMedia.media);
+    }
 };
 
 Player.prototype.block = function (id) {
@@ -56,6 +64,13 @@ Player.prototype.isBlocked = function () {
 Player.prototype.updateState = function () {
     console.log("updating state for actual=" + this.actualState + " desired=" + this.disiredState + 
         " with blocking: " + Object.keys(this.blocking).length);
+
+    if (this.disiredState == "stopped") {
+        this.actualState = "stopped";
+        this.events.emit("stop");
+        this.timer.stop();
+        this.timer.elapsedTime(0);
+    }
 
     if (this.actualState == "adjusting") {
         this.actualState = "paused";
