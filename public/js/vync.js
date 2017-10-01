@@ -25,6 +25,7 @@ Vync.socket.on("play", () => this.player.play());
 Vync.socket.on("pause", () => this.player.pause());
 Vync.socket.on("seek", (time) => this.player.setCurrentTime(time));
 Vync.socket.on("setVideo", (platform, videoId) => this.player.playback(platform, videoId));
+Vync.socket.on("confirmName", (name) => updateOwnName(name));
 
 Vync.socket.on("userupdate", (data) => updateUserlist(data));
 
@@ -34,6 +35,10 @@ function changeName() {
     var newName = $("#newName").val();
     Vync.socket.emit("changeName", newName);
     $("#renameModal").modal("hide");
+}
+
+function updateOwnName(name) {
+    $("#self span").val(name);
 }
 
 function updateUserlist(users) {
