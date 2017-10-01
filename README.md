@@ -1,4 +1,4 @@
-# vync.it
+# [vync.it](https://devpost.com/software/vync-it)
 
 ## Inspiration
 
