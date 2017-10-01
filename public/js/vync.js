@@ -42,8 +42,8 @@ Vync.socket.on("confirmName", (name) => updateOwnName(name));
 
 Vync.socket.on("confirmName", (name) => updateOwnName(name));
 Vync.socket.on("userupdate", (data) => updateUserlist(data));
-Vync.socket.on("queueVideo", (provider, media) => updateUserlist(provider, media));
-Vync.socket.on("playlistShift", () => shiftPlaylist());
+Vync.socket.on("playlistAdd", (provider, media) => playlistAdd(provider, media));
+Vync.socket.on("playlistRemove", () => playlistRemove());
 
 /* Local player events */
 Vync.player.on("timeupdate", (data) => {

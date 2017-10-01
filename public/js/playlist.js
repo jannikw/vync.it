@@ -34,7 +34,7 @@ function submitNewUrl() {
     }
 }
 
-function addPlaylistVideo(provider, media) {
+function playlistAdd(provider, media) {
     var item = {
         thumbnail: provider == "youtube" ? "https://img.youtube.com/vi/" + media + "/mqdefault.jpg" : provider == "vimeo" ? "/img/vimeo.png" : null,
         duration: media
@@ -43,6 +43,6 @@ function addPlaylistVideo(provider, media) {
     $("#addurl button").stop().css("background-color", "green").animate({ backgroundColor: "none"}, 500);
 }
 
-function shiftPlaylist() {
+function playlistRemove() {
     $("#playlist-scroll .upcoming").first().remove();
 }
