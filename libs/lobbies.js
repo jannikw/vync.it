@@ -9,10 +9,14 @@ function Lobby(id) {
 
     this.updateNamesHandler = () => this.notifyUserUpdate();
     
-    this.player.events.on("playback", (provider, media) => this.notifyAll("playback", provider, media));
+    this.player.events.on("playback", (provider, media) => {
+        this.sockets.forEach((socket) => this.player.block(socket.conn.id));
+        this.notifyAll("playback", provider, media);
+    });
     this.player.events.on("play", () => this.notifyAll("play"));
     this.player.events.on("pause", () => this.notifyAll("pause"));
     this.player.events.on("stop", () => this.notifyAll("stop"));
+    this.player.events.on("adjustTime", (time) => this.notifyAll("setCurrentTime", time));
 }
 
 Lobby.prototype.addSocket = function (socket) {
@@ -21,10 +25,6 @@ Lobby.prototype.addSocket = function (socket) {
     let userId = socket.handshake.session.userId;
     let user = this.members.find((user) => user.id == userId);
     let socketId = socket.conn.id;
-
-    let onPlayback = () => this.player.block(socketId);
-
-    this.player.events.on("playback", onPlayback);
 
     socket.on("disconnect", () => {
         let index = this.sockets.indexOf(socket);
@@ -36,11 +36,22 @@ Lobby.prototype.addSocket = function (socket) {
             this.leave(user);
         }
 
-        this.player.events.removeListener("playback", onPlayback);
         this.player.unblock();
     });
 
+    socket.on("timeupdate", (data) => this.player.checkClientTime(data.seconds));
     socket.on("ready", () => this.player.unblock(socketId));
+    socket.on("buffering", () => this.player.block(socketId));
+    socket.on("playing", () =>  {
+        this.player.unblock(socketId);
+        this.player.play();
+    });
+    socket.on("paused", () => {
+        this.player.pause();
+    });
+    socket.on("playing", () => {
+        this.player.play();
+    });
 
     socket.on("changeName", (name) => {
         user.updateName(name);
@@ -55,6 +66,7 @@ Lobby.prototype.addSocket = function (socket) {
 
     if (current) {
         socket.emit("playback", current.provider, current.media);
+        this.player.block(socketId);
     }
 };
 
@@ -95,8 +107,8 @@ Lobby.prototype.notifyUserUpdate = function () {
         }));
 };
 
-Lobby.prototype.notifyAll = function (event, data) {
-    this.sockets.forEach((socket) => socket.emit(event, data));
+Lobby.prototype.notifyAll = function () {
+    this.sockets.forEach((socket) => socket.emit.apply(socket, arguments));
 };
 
 Lobby.prototype.isMember = function (user) {

@@ -60,6 +60,7 @@ window.Providers.youtube = function () {
                                 break;
                             case YT.PlayerState.BUFFERING:
                                 this.eventHandler("buffering");
+                                setTimeout(() => this.player.playVideo(), 100);
                                 clearInterval(this.intervalId);
                                 break;
                             case YT.PlayerState.CUED:

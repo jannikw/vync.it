@@ -3,8 +3,8 @@ function MultiPlayer(elementId) {
     this.elementId = elementId;
     this.handlers = {
         timeupdate: [],
-        play: [],
-        pause: [],
+        playing: [],
+        paused: [],
         buffering: [],
         ended: [],
         error: [],

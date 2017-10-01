@@ -34,7 +34,7 @@ $(document).ready(function() {
 /* Remote events */
 Vync.socket.on("play", () => Vync.player.play().done());
 Vync.socket.on("pause", () => Vync.player.pause().done());
-Vync.socket.on("seek", (time) => Vync.player.setCurrentTime(time).done());
+Vync.socket.on("setCurrentTime", (time) => Vync.player.setCurrentTime(time).done());
 Vync.socket.on("playback", (platform, videoId) => Vync.player.playback(platform, videoId).done());
 
 Vync.socket.on("confirmName", (name) => updateOwnName(name));
@@ -46,11 +46,11 @@ Vync.socket.on("userupdate", (data) => updateUserlist(data));
 Vync.player.on("timeupdate", (data) => {
     Vync.socket.emit("timeupdate", data);
 });
-Vync.player.on("play", () => {
-    Vync.socket.emit("play");
+Vync.player.on("playing", () => {
+    Vync.socket.emit("playing");
 });
-Vync.player.on("pause", () => {
-    Vync.socket.emit("pause");
+Vync.player.on("paused", () => {
+    Vync.socket.emit("paused");
 });
 Vync.player.on("buffering", () => {
     Vync.socket.emit("buffering");
