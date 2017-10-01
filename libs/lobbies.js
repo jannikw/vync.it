@@ -1,12 +1,18 @@
+const Player = require("./player");
 
 function Lobby(id) {
     this.id = id;
     this.title = "Lobby " + id;
     this.members = [];
     this.sockets = [];
-    this.playlist = [];
+    this.player = new Player();
 
     this.updateNamesHandler = () => this.notifyUserUpdate();
+    
+    this.player.events.on("playback", (provider, media) => this.notifyAll("playback", provider, media));
+    this.player.events.on("play", () => this.notifyAll("play"));
+    this.player.events.on("pause", () => this.notifyAll("pause"));
+    this.player.events.on("stop", () => this.notifyAll("stop"));
 }
 
 Lobby.prototype.addSocket = function (socket) {
@@ -14,6 +20,11 @@ Lobby.prototype.addSocket = function (socket) {
 
     let userId = socket.handshake.session.userId;
     let user = this.members.find((user) => user.id == userId);
+    let socketId = socket.conn.id;
+
+    let onPlayback = () => this.player.block(socketId);
+
+    this.player.events.on("playback", onPlayback);
 
     socket.on("disconnect", () => {
         let index = this.sockets.indexOf(socket);
@@ -24,12 +35,27 @@ Lobby.prototype.addSocket = function (socket) {
         if (!userConnected) {
             this.leave(user);
         }
+
+        this.player.events.removeListener("playback", onPlayback);
+        this.player.unblock();
     });
+
+    socket.on("ready", () => this.player.unblock(socketId));
 
     socket.on("changeName", (name) => {
         user.updateName(name);
         socket.emit("confirmName", name);
     });
+
+    socket.on("addMedia", (input) => {
+        this.player.addMedia("youtube", input);
+    });
+
+    let current = this.player.getCurrentMedia();
+
+    if (current) {
+        socket.emit("playback", current.provider, current.media);
+    }
 };
 
 Lobby.prototype.join = function (user) {

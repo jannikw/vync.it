@@ -1,4 +1,4 @@
-/* global $:true io:true Vync:true Handlebars MultiPlayer Providers */
+/* global $:true io:true Vync:true Handlebars MultiPlayer Providers Q */
 
 Vync = {
     lobbyId: window.location.pathname.split("/")[2],
@@ -21,7 +21,7 @@ Vync = {
         player.addProvider("vimeo", Providers.vimeo);
 
         return player;
-    })()
+    })(),
 };
 
 /* Page loading */
@@ -32,11 +32,12 @@ $(document).ready(function() {
 });
 
 /* Remote events */
-Vync.socket.on("play", () => Vync.player.play());
-Vync.socket.on("pause", () => Vync.player.pause());
-Vync.socket.on("seek", (time) => Vync.player.setCurrentTime(time));
-Vync.socket.on("playback", (platform, videoId) => Vync.player.playback(platform, videoId));
-Vync.socket.on("addPlaylistVideo", addPlaylistVideo);
+Vync.socket.on("play", () => Vync.player.play().done());
+Vync.socket.on("pause", () => Vync.player.pause().done());
+Vync.socket.on("seek", (time) => Vync.player.setCurrentTime(time).done());
+Vync.socket.on("playback", (platform, videoId) => Vync.player.playback(platform, videoId).done());
+
+Vync.socket.on("confirmName", (name) => updateOwnName(name));
 
 Vync.socket.on("confirmName", (name) => updateOwnName(name));
 Vync.socket.on("userupdate", (data) => updateUserlist(data));

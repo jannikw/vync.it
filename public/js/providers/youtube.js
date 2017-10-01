@@ -85,13 +85,17 @@ window.Providers.youtube = function () {
     };
 
     YouTubeProvider.prototype.playback = function (media) {
-        this.player.cueVideoById(media);
-        return Q();
+        return Q.Promise((resolve) => {
+            this.player.cueVideoById(media);
+            resolve();
+        });
     };
 
     YouTubeProvider.prototype.play = function () {
-        this.player.playVideo();
-        return Q();
+        return Q.Promise((resolve) => {
+            this.player.playVideo();
+            resolve();
+        });
     };
 
     YouTubeProvider.prototype.pause = function () {
