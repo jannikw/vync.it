@@ -24,7 +24,7 @@ Player.prototype.addMedia = function (provider, media) {
         provider: provider,
         media: media
     });
-    this.events.emit("playlistRemove", provider, media);
+    this.events.emit("playlistAdd", provider, media);
 
     if (this.currentMedia == null) {
         this.next();
