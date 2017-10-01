@@ -1,4 +1,4 @@
-/* global $:true io:true Vync:true Handlebars MultiPlayer:true */
+/* global $:true io:true Vync:true Handlebars MultiPlayer Providers */
 
 Vync = {
     lobbyId: window.location.pathname.split("/")[2],
@@ -14,7 +14,14 @@ Vync = {
             playlistentry: load("template-playlist-entry")
         };
     })(),
-    player: new MultiPlayer("player")
+    player: (() => {
+        let player = new MultiPlayer("player");
+
+        player.addProvider("youtube", Providers.youtube);
+        player.addProvider("vimeo", Providers.vimeo);
+
+        return player;
+    })()
 };
 
 /* Page loading */
