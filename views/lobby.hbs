@@ -19,7 +19,10 @@
     </div>
 </div>
 
+{{{embedPartial "template-user" "user.hbs"}}}
+
 {{#contentFor "pageScripts"}}
+    <script src="/lib/handlebars-v4.0.10.js"></script>
     <script src="/lib/q.js"></script>
     <script src="/js/providers/youtube.js" ></script>
     <script src="/js/providers/vimeo.js" ></script>

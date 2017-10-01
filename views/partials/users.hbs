@@ -1,9 +1,7 @@
 <div id="users">
     <ul class="list-group">
         {{#each lobby.members}}
-            <li id="user-{{this.id}}" class="list-group-item">
-                <span>{{this.name}}</span><i class="fa fa-times-circle-o" aria-hidden="true" title="Kick {{this.name}}"></i>
-            </li>
+            {{> user}}
         {{/each}}
     </ul>
 </div>

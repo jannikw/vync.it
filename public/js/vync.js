@@ -1,11 +1,22 @@
-/* global $:true io:true Vync:true */
+/* global $:true io:true Vync:true Handlebars */
+
 $(document).ready(function() {
     var height = ($("#content #player").css("width").replace("px", "") * 0.5625) + "px";
     $("#content #player").css("height", height);
 });
 
 Vync = {
-    socket: io()
+    socket: io(),
+    templates: (() => {
+        function load(id) {
+            let source = $("#" + id).html();
+            return Handlebars.compile(source);
+        }
+
+        return {
+            user: load("template-user")
+        };
+    })()
 };
 
 Vync.socket.on("play", () => this.player.play());
@@ -27,7 +38,7 @@ function updateUserlist(users) {
     });
     $.each(users, function(index) {
         var item = users[index];
-        $("#users ul").append(createUserItem(item));
+        $("#users ul").append(Vync.templates.user(item));
     });
 }
 
@@ -36,11 +47,4 @@ function getByProperty(haystack, property, needle) {
         if (value.id == needle)
             return value;
     });
-}
-
-function createUserItem(user) {
-    return "<li id=\"user-" + user.id + "\" class=\"list-group-item\">" +
-                "<span>" + user.name + "</span>" +
-                "<i class=\"fa fa-times-circle-o\" aria-hidden=\"true\" title=\"Kick\"></i>" +
-            "</li>";
 }

@@ -10,6 +10,16 @@ const http = require("http");
 
 const routes = require("./routes/");
 const sockets = require("./sockets/");
+const hbsHelpers = require("./libs/hbs-helpers");
+
+let hbsSettings = {
+    defaultLayout: __dirname + "/views/layouts/default.hbs",
+    partialsDir: __dirname + "/views/partials/",
+    layoutsDir: __dirname + "/views/layouts/",
+};
+
+// Register handlebars helpers
+hbsHelpers.registerAll(hbs, hbsSettings);
 
 // Business logic
 const LobbyManager = require("./libs/lobbies.js");
@@ -40,11 +50,8 @@ io.use(socketSessionManager);
 // Setup express
 app.use(morgan("dev"));
 app.set("view engine", "hbs");
-app.engine("hbs", hbs.express4({
-    defaultLayout: __dirname + "/views/layouts/default.hbs",
-    partialsDir: __dirname + "/views/partials/",
-    layoutsDir: __dirname + "/views/layouts/"
-}));
+
+app.engine("hbs", hbs.express4(hbsSettings));
 app.set("views", __dirname + "/views/");
 
 // Setup static file serving and favicon
