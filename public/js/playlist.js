@@ -29,7 +29,7 @@ function scrollPlaylistRight() {
 function submitNewUrl() {
     var url = $("#addurl input").val();
     if (url.trim() != "") {
-        Vync.socket.emit("addvideo", url.trim());
+        Vync.socket.emit("addVideo", url.trim());
         $("#addurl input").val("");
     }
 }
