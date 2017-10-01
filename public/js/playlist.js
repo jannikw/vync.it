@@ -45,3 +45,7 @@ function playlistAdd(provider, media) {
 function playlistRemove() {
     $("#playlist-scroll .upcoming").first().remove();
 }
+
+function nextVideo() {
+    Vync.socket.emit("next");
+}
