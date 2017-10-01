@@ -39,6 +39,9 @@ Player.prototype.getCurrentMedia = function () {
 
 Player.prototype.next = function () {
     this.disiredState = "stopped";
+    this.currentMedia = null;
+    this.timer.stop();
+    this.timer.elapsedTime(0);
     this.updateState();
 
     if (this.playlist.length > 0) {
@@ -77,8 +80,9 @@ Player.prototype.updateState = function () {
     }
 
     if (this.actualState == "adjusting") {
-        this.actualState = "paused";
-        this.events.emit("pause");
+        //this.actualState = "paused";
+        this.timer.stop();
+        //this.events.emit("pause");
         this.events.emit("adjustTime", this.timer.elapsedTime());
     }
 

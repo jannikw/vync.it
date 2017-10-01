@@ -11,7 +11,9 @@ function Timer() {
 Timer.prototype.elapsedTime = function (time) {
     if (time) {
         this.elapsed = time;
-        this.started = process.hrtime();
+        if (this.started) {
+            this.started = process.hrtime();
+        }
     } else {
         if (this.started) {
             return this.elapsed + toSeconds(process.hrtime(this.started));
