@@ -1,4 +1,4 @@
-/* global $:true io:true Vync:true Handlebars */
+/* global $:true io:true Vync:true Handlebars MultiPlayer:true */
 
 Vync = {
     lobbyId: window.location.pathname.split("/")[2],
@@ -12,7 +12,8 @@ Vync = {
         return {
             user: load("template-user")
         };
-    })()
+    })(),
+    player: new MultiPlayer("player")
 };
 
 /* Page loading */
@@ -23,34 +24,34 @@ $(document).ready(function() {
 });
 
 /* Remote events */
-Vync.socket.on("play", () => this.player.play());
-Vync.socket.on("pause", () => this.player.pause());
-Vync.socket.on("seek", (time) => this.player.setCurrentTime(time));
-Vync.socket.on("setVideo", (platform, videoId) => this.player.playback(platform, videoId));
+Vync.socket.on("play", () => Vync.player.play());
+Vync.socket.on("pause", () => Vync.player.pause());
+Vync.socket.on("seek", (time) => Vync.player.setCurrentTime(time));
+Vync.socket.on("setVideo", (platform, videoId) => Vync.player.playback(platform, videoId));
 Vync.socket.on("confirmName", (name) => updateOwnName(name));
 
 Vync.socket.on("userupdate", (data) => updateUserlist(data));
 
 /* Local player events */
-this.player.on("timeupdate", (data) => {
+Vync.player.on("timeupdate", (data) => {
     Vync.socket.emit("timeupdate", data);
 });
-this.player.on("play", () => {
+Vync.player.on("play", () => {
     Vync.socket.emit("play");
 });
-this.player.on("pause", () => {
+Vync.player.on("pause", () => {
     Vync.socket.emit("pause");
 });
-this.player.on("buffering", () => {
+Vync.player.on("buffering", () => {
     Vync.socket.emit("buffering");
 });
-this.player.on("ended", () => {
+Vync.player.on("ended", () => {
     Vync.socket.emit("ended");
 });
-this.player.on("ready", () => {
+Vync.player.on("ready", () => {
     Vync.socket.emit("ready");
 });
-this.player.on("error", (data) => {
+Vync.player.on("error", (data) => {
     Vync.socket.emit("error", data);
 });
 
