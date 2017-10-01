@@ -5,13 +5,21 @@ function init(io, state) {
         let user = state.users.getUserById(userId);
 
         if (user == null) {
-            console.warn("socket for unknown user, ignoring.")
+            console.warn("socket for unknown user, ignoring.");
             return;
         }
 
-        console.log("socket connected for user: " + userId);
+        console.log("socket " + socket.conn.id + " connected for user " + userId);
 
-        user.setSocket(socket);
+        socket.on("enter", (lobbyId) => {
+            let lobby = state.lobbies.getLobbyById(lobbyId);
+
+            if (lobby) {
+                lobby.addSocket(socket);
+
+                console.log("user " + userId + " entered lobby " + lobbyId + " with socket " + socket.conn.id);
+            }
+        });
     });
 }
 

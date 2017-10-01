@@ -3,7 +3,26 @@ function Lobby(id) {
     this.id = id;
     this.title = "Lobby " + id;
     this.members = [];
+    this.sockets = [];
+    this.playlist = [];
 }
+
+Lobby.prototype.addSocket = function (socket) {
+    this.sockets.push(socket);
+
+    socket.on("disconnect", () => {
+        let userId = socket.handshake.session.userId;
+        let index = this.sockets.indexOf(socket);
+        this.sockets.splice(index, 1);
+
+        var userConnected = this.sockets.some((socket) => socket.handshake.session.userId == userId); 
+
+        if (!userConnected) {
+            let user = this.members.find((user) => user.id == userId);
+            this.leave(user);
+        }
+    });
+};
 
 Lobby.prototype.join = function (user) {
     let index = this.members.indexOf(user);
@@ -14,7 +33,7 @@ Lobby.prototype.join = function (user) {
     }
 
     this.members.push(user);
-    this.sendUserUpdate();
+    this.notifyUserUpdate();
 
     user.events.once("disconnect", () => this.leave(user));
 };
@@ -27,10 +46,10 @@ Lobby.prototype.leave = function (user) {
     }
 
     this.members.splice(index, 1);
-    this.sendUserUpdate();
+    this.notifyUserUpdate();
 };
 
-Lobby.prototype.sendUserUpdate = function () {
+Lobby.prototype.notifyUserUpdate = function () {
     this.notifyAll("userupdate", 
         this.members.map((member) => {
             return {
@@ -41,9 +60,7 @@ Lobby.prototype.sendUserUpdate = function () {
 };
 
 Lobby.prototype.notifyAll = function (event, data) {
-    this.members.forEach((member) => {
-        member.notify(event, data);
-    });
+    this.sockets.forEach((socket) => socket.emit(event, data));
 };
 
 Lobby.prototype.isMember = function (user) {

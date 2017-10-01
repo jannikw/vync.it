@@ -4,29 +4,8 @@ function User(id, name) {
     this.id = id;
     this.name = name;
     this.temporary = true;
-    this.socket = null;
     this.events = new EventEmitter();
 }
-
-User.prototype.setSocket = function (socket) {
-    let disconnectHandler = () => {
-        this.events.emit("disconnect");
-    };
-
-    if (this.socket) {
-        this.socket.removeListener("disconnect", disconnectHandler);
-        this.socket.disconnect();
-    }
-
-    this.socket = socket;
-    this.socket.on("disconnect", disconnectHandler);
-};
-
-User.prototype.notify = function (event, data) {
-    if (this.socket) {
-        this.socket.emit(event, data);
-    }
-};
 
 function UserManager() {
     this.users = [];
