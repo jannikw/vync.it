@@ -20,6 +20,7 @@ window.Providers.vimeo = function () {
             this.eventHandler = eventHandler;
 
             let element = document.getElementById(elementId);
+            element.setAttribute("class", "vimeo");
             let width = element.clientWidth;
             let height = element.clientheight;
             
