@@ -13,3 +13,7 @@
     background-color: #EEEEEE;
     margin-top: 7.5%;
 }
+
+.vimeo iframe{
+    margin-top: -115px;
+}
